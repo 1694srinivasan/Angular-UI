@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Angular Material UI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="src/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" href="css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="css/angular-material.min.css">
+</head>
+<body ng-app="uiapp" layout="column" ng-controller="uictrl">
+<md-toolbar layout="row" style="background-color: #1DABB8;">
+	<div layout="row" layout-align="start center">
+		<a ng-click="toggleLeft()" class="md-raised fa fa-bars" style="color: #ffffff;padding-left:20px;"></a>
+		<a href="#" class="md-toolbar-tools" style="color: #ffffff;">Pilot</a>
+	</div>
+	<span flex ></span>
+	<div layout="row" layout-align="end center">
+	    <md-menu>
+      		<a class="dropbtn" href="#" aria-label="Open menu with custom trigger" ng-mouseenter="$mdMenu.open()" style="color: #ffffff;padding-right: 30px;">Username&nbsp;<span class="fa fa-caret-down"></span></a>
+      		<md-menu-content ng-mouseleave="$mdMenu.close()" style="width: 150px;background-color: #3E4651">
+      		<div layout="column" layout-align="end center">
+	      		<md-button class="sidenavbutton">
+	      			<a class="fa fa-user dropbtn" href="#" style="color: #ffffff;">&nbsp;Profile</a>
+	      		</md-button>
+	      		<md-button class="sidenavbutton">
+	      			<a class="fa fa-gear dropbtn" href="#" style="color: #ffffff;">&nbsp;Settings</a>
+	      		</md-button>
+	      		<md-button class="sidenavbutton">
+	      			<a class="fa fa-sign-out dropbtn" href="#" style="color: #ffffff;">&nbsp;Logout</a>
+	      		</md-button>
+      		</div>
+    	</md-menu>
+	</div>	
+</md-toolbar>
+<div>
+	<section layout="row" flex="">
+	    <md-sidenav class="md-sidenav-left" md-component-id="left" md-disable-backdrop="" md-whiteframe="4" style="background-color: #3E4651;color: #ffffff;width: 250px;">
+	      	<md-toolbar class="md-theme-indigo" style="background-color: #1DABB8;">
+	      		<div layout="row" layout-align="start center">
+	      			<h1 class="md-toolbar-tools">Menu Options</h1>
+	      			<a class="md-accent glyphicon glyphicon-remove-sign" ng-click="toggleLeft()" style="color: #ffffff;"></a>
+	      		</div>	
+	      	</md-toolbar>
+	      	<md-list ng-repeat="x in dropdown" class="sidenav">
+				<md-list-item>
+					<md-button class="sidenavbutton">
+						<div layout="row" layout-align="start center">
+							<div ng-if="x.enable == true">
+		     					<center><label><input type="checkbox" id="id_{{ x.id}}" ng-click="closecheck($index,x.id,x.enable)" checked="checked">&nbsp;&nbsp;{{ x.widget_name}}</label></center>
+		     				</div>
+		     				<div ng-if="x.enable == false">
+		     					<center><label><input type="checkbox" id="id_{{ x.id}}" ng-click="closecheck($index,x.id,x.enable)"><span class="nbsp"></span>&nbsp;&nbsp;{{ x.widget_name}}</label></center>
+		     				</div>
+	     				</div>
+					</md-button>
+				</md-list-item>
+			</md-list>
+	    </md-sidenav>
+	    <md-content flex="" layout-padding="">
+	      	<div layout="column" class="col-sm-6 well" ng-repeat="x in widgetdata">
+	      		<div layout="row" layout-align="start center">
+					<a ng-click="close($index,x.id)" class="md-raised fa fa-times" style="padding-left:20px;"></a>
+					<h1 class="md-toolbar-tools">{{x.widget_name}}</h1>
+				</div>
+	        	<md-whiteframe class="md-whiteframe-5dp" flex-sm="80" flex-gt-sm="80" flex-gt-md="80" layout layout-align="center center">
+  					<div ng-if="x.widget_name == 'Widget 1'" style="padding-top: 30px;padding-bottom: 30px;">
+  						<div id="pichart">
+						</div>
+  					</div>
+  					<div ng-if="x.widget_name == 'Widget 2'" style="padding-top: 30px;padding-bottom: 30px;">
+  						<div id="barchart">
+						</div>
+  					</div>
+  					<div ng-if="x.widget_name == 'Widget 3'" style="padding-top: 30px;padding-bottom: 30px;">
+  						<table class="table table-striped" datatable="ng" dt-options="dtOptions">
+						    <thead>
+						      <tr>
+						        <th>S.no</th>
+						        <th>Laptop Name</th>
+						        <th>Users</th>
+						      </tr>
+						    </thead>
+						    <tbody>
+								<tr ng-repeat=" x in userdata">
+									<td>{{ $index + 1 }}</td>
+									<td>{{ x.product_name }}</td>
+									<td>{{ x.count }}</td>
+								</tr>
+							</tbody>
+			  			</table>
+  					</div>
+  					<div ng-if="x.widget_name == 'Widget 4'" style="padding-top: 30px;padding-bottom: 30px;">
+  						<table class="table table-striped" datatable="ng" dt-options="dtOptions">
+						    <thead>
+						      <tr>
+						        <th>S.no</th>
+						        <th>City</th>
+						        <th>Temperature</th>
+						      </tr>
+						    </thead>
+						    <tbody>
+								<tr ng-repeat=" x in temp_data" >
+									<td>{{ $index + 1 }}</td>
+									<td>{{ x.city_name }}</td>
+									<td>{{ x.temprature }}</td>
+								</tr>
+							</tbody>
+  						</table>
+  					</div>
+				</md-whiteframe>
+	      	</div>
+	    </md-content>
+    </section>
+</div>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/highcharts.js"></script>
+<script type="text/javascript" src="src/jquery.dataTables.min.js"></script>
+<script src="js/angular.min.js"></script>
+<script src="js/angular-animate.js"></script>
+<script src="js/angular-aria.min.js"></script>
+<script src="js/angular-material.min.js"></script>
+<script src="js/control.js"></script>
+<script type="text/javascript" src="src/angular-datatables.js"></script>
+</body>
+</html>
